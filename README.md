@@ -3,39 +3,58 @@
 A practical guide to setting up a local Kubernetes cluster using Kind for development, testing, and experimentation.
 
 
-
 ## 1. Prerequisites and installation
 
-[Kind (Kubernetes in Docker)](https://kind.sigs.k8s.io/) runs Kubernetes nodes as containers. This guide uses Docker on macOS; install [Docker Desktop](https://docs.docker.com/desktop/setup/install/mac-install/) and start it first.
+[Kind (Kubernetes in Docker)](https://kind.sigs.k8s.io/) runs Kubernetes nodes as containers. 
+This guide uses Docker on macOS; install [Docker Desktop](https://docs.docker.com/desktop/setup/install/mac-install/) and start it first.
 
 With [Homebrew](https://brew.sh/) installed:
 
 ```bash
-brew install kind kubectl k9s
+brew install kind 
+brew install kubectl
+brew install derailed/k9s/k9s
 ```
 
 - [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/#installation): creates and deletes local clusters.
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/): communicates with the Kubernetes API.
 - [K9s](https://k9scli.io/topics/install/): optional interactive terminal UI for inspecting resources.
+[k9s](https://github.com/derailed/k9s/releases): from github release page
 
 Alternatively, download standalone executables using the official installation pages above. Select `darwin/arm64` for Apple Silicon or `darwin/amd64` for Intel (`uname -m` reports `arm64` or `x86_64`). Extract archives where necessary, then install each downloaded executable (named `kind`, `kubectl` or `k9s`) into a directory on your PATH, for example:
 
 ```bash
-sudo mkdir -p /usr/local/bin
-sudo install -m 0755 kind /usr/local/bin/kind
-sudo install -m 0755 kubectl /usr/local/bin/kubectl
-sudo install -m 0755 k9s /usr/local/bin/k9s
-```
+## kind
+[ $(uname -m) = arm64 ] && curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.33.0/kind-darwin-arm64
+## kube
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/arm64/kubectl"
+## k9s [optinal]
+curl -fLO "https://github.com/derailed/k9s/releases/latest/download/k9s_$(uname -s)_$(uname -m | sed -e 's/x86_64/amd64/' -e 's/aarch64/arm64/').tar.gz" 
+tar -zxvf k9s_Darwin_arm64.tar.gz
 
-Use the official release checksums where provided. Do not modify macOS system directory `/usr/bin`. Homebrew manages its own installation paths.
+## add execute permission
+chmod +x kind
+chmod +x kubectl
+chmod +x k9s
 
-Verify:
+## check the version
+./kind version
+./kubectl version
+./k9s version
 
-```bash
-docker version
-kind version
-kubectl version --client
-k9s version
+## Move the binaries to /usr/local/bin
+## a standard directory typically included in PATH on macOS and Linux.
+mv kind /usr/local/bin/kind
+mv kubectl /usr/local/bin/kubectl
+mv k9s /usr/local/bin/k9s
+
+## Verify the location of the installed binaries: 
+which kind
+which kubectl
+which k9s
+
+## Finally, verify that Docker is running:
+docker info
 ```
 
 ## 2. Create the cluster
