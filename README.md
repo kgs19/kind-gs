@@ -4,24 +4,20 @@ A practical guide to setting up a local Kubernetes cluster using Kind for develo
 
 
 ## 1. Prerequisites and installation
-
 [Kind (Kubernetes in Docker)](https://kind.sigs.k8s.io/) runs Kubernetes nodes as containers. 
-This guide uses Docker on macOS; install [Docker Desktop](https://docs.docker.com/desktop/setup/install/mac-install/) and start it first.
 
-With [Homebrew](https://brew.sh/) installed:
+This guide uses macOS on (ARM64), but the instructions can easily be adapted to Linux, and most commands also work on Windows.
 
-```bash
-brew install kind 
-brew install kubectl
-brew install derailed/k9s/k9s
-```
+### Prerequisite 
+Docker must be installed and running. This guide uses Docker Desktop.
+
+### Installation pages
+> Download standalone executables using the official installation pages below. 
 
 - [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/#installation): creates and deletes local clusters.
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/): communicates with the Kubernetes API.
-- [K9s](https://k9scli.io/topics/install/): optional interactive terminal UI for inspecting resources.
-[k9s](https://github.com/derailed/k9s/releases): from github release page
+- [k9s](https://github.com/derailed/k9s/releases): [optional] interactive terminal UI for inspecting resources
 
-Alternatively, download standalone executables using the official installation pages above. Select `darwin/arm64` for Apple Silicon or `darwin/amd64` for Intel (`uname -m` reports `arm64` or `x86_64`). Extract archives where necessary, then install each downloaded executable (named `kind`, `kubectl` or `k9s`) into a directory on your PATH, for example:
 
 ```bash
 ## kind
@@ -58,6 +54,15 @@ which k9s
 ## Finally, verify that Docker is running:
 docker info
 ```
+
+Alternatively, with [Homebrew](https://brew.sh/) installed:
+
+```bash
+brew install kind 
+brew install kubectl
+brew install derailed/k9s/k9s
+```
+
 
 ## 2. Create the cluster
 Open [kind.yaml](kind.yaml). It defines a cluster named `local`, with one control-plane node and two worker nodes. 
