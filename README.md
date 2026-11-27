@@ -26,8 +26,10 @@ Alternatively, download standalone executables using the official installation p
 ```bash
 ## kind
 [ $(uname -m) = arm64 ] && curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.33.0/kind-darwin-arm64
-## kube
+
+## kubectl
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/arm64/kubectl"
+
 ## k9s [optinal]
 curl -fLO "https://github.com/derailed/k9s/releases/latest/download/k9s_$(uname -s)_$(uname -m | sed -e 's/x86_64/amd64/' -e 's/aarch64/arm64/').tar.gz" 
 tar -zxvf k9s_Darwin_arm64.tar.gz
