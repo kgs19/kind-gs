@@ -35,24 +35,19 @@ chmod +x kind
 chmod +x kubectl
 chmod +x k9s
 
-## check the version
-./kind version
-./kubectl version
-./k9s version
-
 ## Move the binaries to /usr/local/bin
 ## a standard directory typically included in PATH on macOS and Linux.
 mv kind /usr/local/bin/kind
 mv kubectl /usr/local/bin/kubectl
 mv k9s /usr/local/bin/k9s
 
-## Verify the location of the installed binaries: 
-which kind
-which kubectl
-which k9s
-
-## Finally, verify that Docker is running:
+## Verify that Docker is running:
 docker info
+
+## check the versions
+kind version
+kubectl version
+k9s version
 ```
 
 Alternatively, with [Homebrew](https://brew.sh/) installed:
