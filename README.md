@@ -66,6 +66,7 @@ Open [kind.yaml](kind.yaml). It defines a cluster named `local`, with one contro
 ```bash
 kind get clusters
 kind create cluster --config kind.yaml
+kind get clusters
 kubectl config current-context
 kubectl get nodes -o wide
 docker ps
