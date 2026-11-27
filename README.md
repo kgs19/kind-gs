@@ -25,7 +25,7 @@ Alternatively, download standalone executables using the official installation p
 
 ```bash
 ## kind
-[ $(uname -m) = arm64 ] && curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.33.0/kind-darwin-arm64
+[ $(uname -m) = arm64 ] && curl -fLo ./kind https://github.com/kubernetes-sigs/kind/releases/latest/download/kind-darwin-arm64
 
 ## kubectl
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/arm64/kubectl"
@@ -60,14 +60,20 @@ docker info
 ```
 
 ## 2. Create the cluster
+Open [kind.yaml](kind.yaml). It defines a cluster named `local`, with one control-plane node and two worker nodes. 
 
-Open [kind.yaml](kind.yaml). It defines a cluster named `local`, with one control-plane node and two worker nodes. The control plane manages the cluster; workers run application workloads. The extra port mapping connects host port `8080` to port `30080` on the control-plane container. We will revisit it in the networking section.
+- `Control plane` nodes are where the Kubernetes control plane components run, such as the API server. They can also run application workloads.
+- `Worker` nodes are primarily responsible for running application workloads
+
+The extra port mapping connects host port `8080` to port `30080` on the control-plane container(k8s node). We will revisit it in the networking section.
+Ensure host port 8080 is free otheriwise set an other port
+
 
 ```bash
-kind get clusters
 kind create cluster --config kind.yaml
 kind get clusters
 kubectl config current-context
+cat ~/.kube/config | grep 'cluster:'
 kubectl get nodes -o wide
 docker ps
 ```
