@@ -46,8 +46,8 @@ docker info
 
 ## check the versions
 kind version
-kubectl version
-k9s version
+kubectl version --client
+k9s version -s
 ```
 
 Alternatively, with [Homebrew](https://brew.sh/) installed:
